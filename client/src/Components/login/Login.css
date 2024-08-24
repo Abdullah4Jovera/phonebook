@@ -1,0 +1,47 @@
+.login_container {
+    background-color: #f6f5f7;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.card_main_container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.card_main_container .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.card_main_container .card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.forgotpassword_btn {
+    background-color: transparent;
+    border: none;
+}
+
+.joveralogo_image {
+    width: 50%;
+    cursor: pointer;
+}
+
+.joveralogo_image_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gradient_button {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(233, 189, 90, 0.5));
+    border: none;
+}

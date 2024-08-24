@@ -1,0 +1,154 @@
+[
+    {
+        "id": "1",
+        "name": "Websites",
+        "lead_type_id": "2",
+        "created_by": "2",
+        "created_at": "2023-05-19 02:21:43",
+        "updated_at": "2023-05-19 02:21:43"
+    },
+    {
+        "id": "2",
+        "name": "Facebook",
+        "lead_type_id": "2",
+        "created_by": "2",
+        "created_at": "2023-05-19 02:21:43",
+        "updated_at": "2023-05-19 02:21:43"
+    },
+    {
+        "id": "3",
+        "name": "Tiktok",
+        "lead_type_id": "2",
+        "created_by": "2",
+        "created_at": "2023-05-19 02:21:43",
+        "updated_at": "2023-05-19 02:21:43"
+    },
+    {
+        "id": "4",
+        "name": "Phone",
+        "lead_type_id": "1",
+        "created_by": "2",
+        "created_at": "2023-05-19 02:21:43",
+        "updated_at": "2023-05-19 02:21:43"
+    },
+    {
+        "id": "5",
+        "name": "LinkedIn",
+        "lead_type_id": "2",
+        "created_by": "2",
+        "created_at": "2023-05-19 02:21:43",
+        "updated_at": "2023-05-19 02:21:43"
+    },
+    {
+        "id": "6",
+        "name": "Marketing Campaign",
+        "lead_type_id": "2",
+        "created_by": "2",
+        "created_at": "2023-05-19 03:36:30",
+        "updated_at": "2023-05-22 09:09:56"
+    },
+    {
+        "id": "7",
+        "name": "Jovera Sales",
+        "lead_type_id": "1",
+        "created_by": "2",
+        "created_at": "2023-05-19 03:36:30",
+        "updated_at": "2023-06-20 15:02:21"
+    },
+    {
+        "id": "8",
+        "name": "Company Data",
+        "lead_type_id": "1",
+        "created_by": "2", 
+        "created_at": "2023-05-19 06:00:42",
+        "updated_at": "2023-05-22 09:10:51"
+    },
+    {
+        "id": "9",
+        "name": "Property Finder",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2023-05-19 06:00:56",
+        "updated_at": "2023-05-19 06:00:56"
+    },
+    {
+        "id": "10",
+        "name": "CEO",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2023-05-24 08:10:55",
+        "updated_at": "2023-05-24 08:10:55"
+    },
+    {
+        "id": "11",
+        "name": "Referral Ajman Br",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2023-05-25 11:29:22",
+        "updated_at": "2023-05-25 11:29:22"
+    },
+    {
+        "id": "12",
+        "name": "Multi M G",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2023-05-30 11:11:14",
+        "updated_at": "2023-05-30 11:11:14"
+    },
+    {
+        "id": "16",
+        "name": "Instagram",
+        "lead_type_id": "2",
+        "created_by": "2",
+        "created_at": "2023-05-30 11:11:14",
+        "updated_at": "2023-05-30 11:11:14"
+    },
+    {
+        "id": "17",
+        "name": "Sales Manager",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2023-05-30 11:11:14",
+        "updated_at": "2023-05-30 11:11:14"
+    },
+    {
+        "id": "18",
+        "name": "Sales",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2023-05-30 11:11:14",
+        "updated_at": "2023-05-30 11:11:14"
+    },
+    {
+        "id": "19",
+        "name": "MD ",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2023-05-30 11:11:14",
+        "updated_at": "2023-05-30 11:11:14"
+    },
+    {
+        "id": "20",
+        "name": "Third Party",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2023-05-30 11:11:14",
+        "updated_at": "2023-05-30 11:11:14"
+    },
+    {
+        "id": "21",
+        "name": "Self Lead",
+        "lead_type_id": "3",
+        "created_by": "2",
+        "created_at": "2024-01-20 14:56:58",
+        "updated_at": "2024-01-20 14:56:58"
+    },
+    {
+        "id": "22",
+        "name": "WhatsApp",
+        "lead_type_id": "2",
+        "created_by": "2",
+        "created_at": "2024-02-29 18:52:20",
+        "updated_at": "2024-02-29 18:52:20"
+    }
+]

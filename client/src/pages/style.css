@@ -1,0 +1,100 @@
+.phonebook-container {
+    padding: 30px;
+}
+
+.equal-width {
+    width: 15%;
+    text-align: center;
+}
+
+.modalBodyStyle {
+    height: '100%' !important;
+    max-height: 700px;
+    overflow-y: scroll
+}
+
+.dropdown_menu,
+.dropdown_menu:active,
+.dropdown_menu:focus,
+.dropdown_menu:focus-visible,
+.dropdown_menu:hover {
+    background-color: white !important;
+    border: none;
+    color: black;
+}
+
+.resetPassword_container {
+    background-color: #f6f5f7;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.resetPassword {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.resetPassword_container .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    height: '100%';
+    max-height: 700px;
+}
+
+.resetPassord_container .card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.joveralogo_image {
+    width: 50%;
+    cursor: pointer;
+}
+
+.joveralogo_image_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search_bar_container {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    margin-bottom: 1%;
+}
+
+.searchBar_container {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.joveraLogo_image {
+    width: 100%;
+    max-width: 70px;
+    height: 100%;
+    max-height: 70px;
+    cursor: pointer;
+}
+
+.all_navbar_btn {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.tableViewContainer {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.table_head {
+    background-color: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(233, 189, 90, 0.5)) !important;
+}

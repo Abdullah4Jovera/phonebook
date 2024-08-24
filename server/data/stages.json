@@ -1,0 +1,90 @@
+[
+    {
+        "id": "1",
+        "name": "Signatured",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 06:21:42",
+        "updated_at": "2023-05-19 06:21:42"
+    },
+    {
+        "id": "2",
+        "name": "Submission",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 06:21:42",
+        "updated_at": "2023-05-19 06:21:42"
+    },
+    {
+        "id": "3",
+        "name": "Approved",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 06:21:42",
+        "updated_at": "2023-05-19 06:21:42"
+    },
+    {
+        "id": "4",
+        "name": "Rejected",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 06:21:42",
+        "updated_at": "2023-05-19 06:21:42"
+    },
+    {
+        "id": "5",
+        "name": "Disbursed",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 06:21:42",
+        "updated_at": "2023-05-19 06:21:42"
+    },
+    {
+        "id": "6",
+        "name": "Collected",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 07:36:30",
+        "updated_at": "2023-06-05 15:17:25"
+    },
+    {
+        "id": "64",
+        "name": "Mortgage",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 07:36:30",
+        "updated_at": "2023-06-05 15:17:25"
+    },
+    {
+        "id": "65",
+        "name": "Telesales",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 07:36:30",
+        "updated_at": "2023-06-05 15:17:25"
+    },
+    {
+        "id": "66",
+        "name": "Business Banking",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 07:36:30",
+        "updated_at": "2023-06-05 15:17:25"
+    },
+    {
+        "id": "67",
+        "name": "Ajman Branch Team",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 07:36:30",
+        "updated_at": "2023-06-05 15:17:25"
+    },
+    {
+        "id": "68",
+        "name": "Unlisted",
+        "created_by": "2",
+        "order": "0",
+        "created_at": "2023-05-19 07:36:30",
+        "updated_at": "2023-06-05 15:17:25"
+    }
+]
