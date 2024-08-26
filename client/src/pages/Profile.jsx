@@ -40,7 +40,7 @@ const Profile = () => {
                 return;
             }
 
-            await axios.put(`${process.env.REACT_APP_BASE_URL}/api/users/reset-password`, { password }, {
+            await axios.put(`/api/users/reset-password`, { password }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

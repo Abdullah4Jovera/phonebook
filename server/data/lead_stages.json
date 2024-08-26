@@ -1,0 +1,605 @@
+[
+    {
+        "id": "1",
+        "name": "New Lead",
+        "pipeline_id": "2",
+        "created_by": "2",
+        "order": "0",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:02:31"
+    },
+    {
+        "id": "2",
+        "name": "Marketing Lead",
+        "pipeline_id": "2",
+        "created_by": "2",
+        "order": "1",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:02:31"
+    },
+    {
+        "id": "3",
+        "name": "Follow Up",
+        "pipeline_id": "2",
+        "created_by": "2",
+        "order": "3",
+        "created_at": null,
+        "updated_at": "2024-04-22 11:25:08"
+    },
+    {
+        "id": "4",
+        "name": "Rejected",
+        "pipeline_id": "2",
+        "created_by": "2",
+        "order": "2",
+        "created_at": null,
+        "updated_at": "2024-04-22 11:25:08"
+    },
+    {
+        "id": "5",
+        "name": "Service App Req",
+        "pipeline_id": "2",
+        "created_by": "2",
+        "order": "6",
+        "created_at": null,
+        "updated_at": "2024-04-22 11:24:59"
+    },
+    {
+        "id": "6",
+        "name": "New Leads",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "0",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:17:27"
+    },
+    {
+        "id": "7",
+        "name": "AECB",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "2",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:17:27"
+    },
+    {
+        "id": "8",
+        "name": "Not Eligibal",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "3",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:17:27"
+    },
+    {
+        "id": "9",
+        "name": "Marketing Lead",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "1",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:17:27"
+    },
+    {
+        "id": "10",
+        "name": "Follow up",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "4",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:17:27"
+    },
+    {
+        "id": "11",
+        "name": "Rejected",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "7",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:17:27"
+    },
+    {
+        "id": "12",
+        "name": "Submission",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "5",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:18:09"
+    },
+    {
+        "id": "13",
+        "name": "Approved",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "6",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:17:27"
+    },
+    {
+        "id": "14",
+        "name": "Disburse",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "8",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:18:35"
+    },
+    {
+        "id": "15",
+        "name": "MC ACK",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "9",
+        "created_at": null,
+        "updated_at": "2024-04-25 18:17:27"
+    },
+    {
+        "id": "16",
+        "name": "New Lead",
+        "pipeline_id": "4",
+        "created_by": "2",
+        "order": "1",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "17",
+        "name": "Marketing Lead",
+        "pipeline_id": "4",
+        "created_by": "2",
+        "order": "2",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "18",
+        "name": "Follow Up",
+        "pipeline_id": "4",
+        "created_by": "2",
+        "order": "3",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "19",
+        "name": "Rejected",
+        "pipeline_id": "4",
+        "created_by": "2",
+        "order": "4",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "20",
+        "name": "Under Calculation",
+        "pipeline_id": "4",
+        "created_by": "2",
+        "order": "5",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "21",
+        "name": "Final discussion",
+        "pipeline_id": "4",
+        "created_by": "2",
+        "order": "6",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "22",
+        "name": "Service App Req",
+        "pipeline_id": "4",
+        "created_by": "2",
+        "order": "7",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "23",
+        "name": "New Lead",
+        "pipeline_id": "5",
+        "created_by": "2",
+        "order": "1",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "24",
+        "name": "Marketing Lead",
+        "pipeline_id": "5",
+        "created_by": "2",
+        "order": "2",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "25",
+        "name": "Pending",
+        "pipeline_id": "5",
+        "created_by": "2",
+        "order": "3",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "26",
+        "name": "Follow Up",
+        "pipeline_id": "5",
+        "created_by": "2",
+        "order": "4",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "27",
+        "name": "Interested",
+        "pipeline_id": "5",
+        "created_by": "2",
+        "order": "5",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "28",
+        "name": "Rejected",
+        "pipeline_id": "5",
+        "created_by": "2",
+        "order": "6",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "29",
+        "name": "Service App Req",
+        "pipeline_id": "5",
+        "created_by": "2",
+        "order": "7",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "30",
+        "name": "New Marketing",
+        "pipeline_id": "6",
+        "created_by": "2",
+        "order": "0",
+        "created_at": null,
+        "updated_at": "2024-01-24 13:59:11"
+    },
+    {
+        "id": "31",
+        "name": "CEO Team",
+        "pipeline_id": "6",
+        "created_by": "2",
+        "order": "1",
+        "created_at": null,
+        "updated_at": "2024-02-17 16:13:42"
+    },
+    {
+        "id": "32",
+        "name": "Follow Up",
+        "pipeline_id": "6",
+        "created_by": "2",
+        "order": "2",
+        "created_at": null,
+        "updated_at": "2024-05-31 11:41:36"
+    },
+    {
+        "id": "33",
+        "name": "No Answer",
+        "pipeline_id": "6",
+        "created_by": "2",
+        "order": "3",
+        "created_at": null,
+        "updated_at": "2024-05-31 11:41:36"
+    },
+    {
+        "id": "34",
+        "name": "Interested",
+        "pipeline_id": "6",
+        "created_by": "2",
+        "order": "4",
+        "created_at": null,
+        "updated_at": "2024-05-31 11:41:36"
+    },
+    {
+        "id": "35",
+        "name": "Rejected",
+        "pipeline_id": "6",
+        "created_by": "2",
+        "order": "6",
+        "created_at": null,
+        "updated_at": "2024-05-31 11:41:37"
+    },
+    {
+        "id": "36",
+        "name": "Service App Req",
+        "pipeline_id": "6",
+        "created_by": "2",
+        "order": "5",
+        "created_at": null,
+        "updated_at": "2024-05-31 11:41:37"
+    },
+    {
+        "id": "37",
+        "name": "New Lead",
+        "pipeline_id": "7",
+        "created_by": "2",
+        "order": "0",
+        "created_at": null,
+        "updated_at": "2024-08-02 15:01:00"
+    },
+    {
+        "id": "38",
+        "name": "Marketing Lead",
+        "pipeline_id": "7",
+        "created_by": "2",
+        "order": "1",
+        "created_at": null,
+        "updated_at": "2024-08-02 15:01:00"
+    },
+    {
+        "id": "39",
+        "name": "Follow Up",
+        "pipeline_id": "7",
+        "created_by": "2",
+        "order": "2",
+        "created_at": null,
+        "updated_at": "2024-08-02 15:01:00"
+    },
+    {
+        "id": "40",
+        "name": "Pending",
+        "pipeline_id": "7",
+        "created_by": "2",
+        "order": "3",
+        "created_at": null,
+        "updated_at": "2024-08-02 15:01:00"
+    },
+    {
+        "id": "41",
+        "name": "Interested",
+        "pipeline_id": "7",
+        "created_by": "2",
+        "order": "4",
+        "created_at": null,
+        "updated_at": "2024-08-02 15:01:00"
+    },
+    {
+        "id": "42",
+        "name": "Rejected",
+        "pipeline_id": "7",
+        "created_by": "2",
+        "order": "5",
+        "created_at": null,
+        "updated_at": "2024-08-02 15:01:00"
+    },
+    {
+        "id": "43",
+        "name": "Service App Req",
+        "pipeline_id": "7",
+        "created_by": "2",
+        "order": "6",
+        "created_at": null,
+        "updated_at": "2024-08-02 15:01:00"
+    },
+    {
+        "id": "44",
+        "name": "Mortgage Marketing",
+        "pipeline_id": "8",
+        "created_by": "2",
+        "order": "1",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "45",
+        "name": "Mortgage Telesales",
+        "pipeline_id": "8",
+        "created_by": "2",
+        "order": "2",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "46",
+        "name": "Business Marketing",
+        "pipeline_id": "8",
+        "created_by": "2",
+        "order": "3",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "47",
+        "name": "Business Telesales",
+        "pipeline_id": "8",
+        "created_by": "2",
+        "order": "4",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "48",
+        "name": "Personal Marketing",
+        "pipeline_id": "8",
+        "created_by": "2",
+        "order": "5",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "49",
+        "name": "Personal Telesales",
+        "pipeline_id": "8",
+        "created_by": "2",
+        "order": "6",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "50",
+        "name": "Real Marketing",
+        "pipeline_id": "8",
+        "created_by": "2",
+        "order": "7",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "51",
+        "name": "Real Telesales",
+        "pipeline_id": "8",
+        "created_by": "2",
+        "order": "8",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "52",
+        "name": "New",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "0",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:58:57"
+    },
+    {
+        "id": "53",
+        "name": "Follow Up",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "2",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:59:11"
+    },
+    {
+        "id": "54",
+        "name": "Collecte Paper",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "3",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:59:21"
+    },
+    {
+        "id": "55",
+        "name": "Case Study",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "4",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:59:45"
+    },
+    {
+        "id": "56",
+        "name": "Interested",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "1",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:06:37"
+    },
+    {
+        "id": "57",
+        "name": "Hold",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "6",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:06:58"
+    },
+    {
+        "id": "58",
+        "name": "Final Discussion",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "5",
+        "created_at": null,
+        "updated_at": "2024-02-02 15:06:58"
+    },
+    {
+        "id": "59",
+        "name": "Rejected",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "8",
+        "created_at": null,
+        "updated_at": "2024-04-05 14:46:56"
+    },
+    {
+        "id": "60",
+        "name": "RE for Sales",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "9",
+        "created_at": null,
+        "updated_at": "2024-04-05 14:46:56"
+    },
+    {
+        "id": "61",
+        "name": "Abu Dhabi Reject",
+        "pipeline_id": "10",
+        "created_by": "2",
+        "order": "9",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "62",
+        "name": "Ajman Reject",
+        "pipeline_id": "10",
+        "created_by": "2",
+        "order": "9",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": "64",
+        "name": "No Answer",
+        "pipeline_id": "9",
+        "created_by": "2",
+        "order": "7",
+        "created_at": "2024-04-05 14:46:49",
+        "updated_at": "2024-04-05 14:46:56"
+    },
+    {
+        "id": "65",
+        "name": "Under Calculation",
+        "pipeline_id": "2",
+        "created_by": "2",
+        "order": "4",
+        "created_at": "2024-04-22 11:24:26",
+        "updated_at": "2024-04-22 11:25:08"
+    },
+    {
+        "id": "66",
+        "name": "Final discussion",
+        "pipeline_id": "2",
+        "created_by": "2",
+        "order": "5",
+        "created_at": "2024-04-22 11:24:53",
+        "updated_at": "2024-04-22 11:25:08"
+    },
+    {
+        "id": "67",
+        "name": "Clearance",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "10",
+        "created_at": "2024-04-25 18:16:45",
+        "updated_at": "2024-04-25 18:17:31"
+    },
+    {
+        "id": "68",
+        "name": "STL",
+        "pipeline_id": "3",
+        "created_by": "2",
+        "order": "11",
+        "created_at": "2024-04-25 18:17:00",
+        "updated_at": "2024-04-25 18:17:31"
+    }
+]

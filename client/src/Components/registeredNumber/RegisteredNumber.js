@@ -1,290 +1,239 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
-import { Button } from 'react-bootstrap';
-import './RegisteredNumber.css';
-import { RxCross2 } from "react-icons/rx";
+import { Button, Container, Table, Form } from 'react-bootstrap';
+import Select from 'react-select';
+import { GrView } from 'react-icons/gr';
 import HomeNavbar from '../navbar/Navbar';
-import { MdOutlineAddCircle } from "react-icons/md";
+import { MdOutlineAddCircle } from 'react-icons/md';
+import ImportCSVForm from '../../Components/ImportCSv';
 
 const RegisteredNumber = () => {
     const [pipelines, setPipelines] = useState([]);
     const [users, setUsers] = useState([]);
-    const [selectedPipeline, setSelectedPipeline] = useState('');
-    const [selectedUser, setSelectedUser] = useState('');
-    const [file, setFile] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [phonebookData, setPhonebookData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+    const [selectedPipeline, setSelectedPipeline] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
     const [show, setShow] = useState(false);
-    const buttonRef = useRef(null);
-    const dropdownRef = useRef(null);
+    const [showViewCommentModal, setShowViewCommentModal] = useState(false);
+    const [commentsToView, setCommentsToView] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // Fetch pipelines on component mount
     useEffect(() => {
-        const fetchPipelines = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/pipelines/get-pipelines`);
-                setPipelines(response.data);
+                const token = JSON.parse(localStorage.getItem('phoneUserData'))?.token;
+                if (!token) throw new Error('Token not found');
+
+                const [pipelinesResponse, usersResponse, phoneBookResponse] = await Promise.all([
+                    axios.get(`/api/pipelines/get-pipelines`),
+                    axios.get(`/api/users/get-users`),
+                    axios.get(`/api/phonebook/get-all-phonebook`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    })
+                ]);
+
+                setPipelines(pipelinesResponse.data.map(pipeline => ({
+                    value: pipeline._id,
+                    label: pipeline.name,
+                })));
+
+                setUsers(usersResponse.data.map(user => ({
+                    value: user._id,
+                    label: user.name,
+                    pipeline: user.pipeline?._id,
+                })));
+
+                const sortedData = phoneBookResponse.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+                setPhonebookData(sortedData);
+                setFilteredData(sortedData);
             } catch (error) {
-                console.error('Error fetching pipelines:', error);
+                setError(error.response?.data?.message || error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchPipelines();
+        fetchData();
     }, []);
 
-    // Fetch users based on selected pipeline
     useEffect(() => {
-        const fetchUsers = async () => {
-            if (selectedPipeline) {
-                try {
-                    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/users/get-users?pipelineId=${selectedPipeline}`);
-                    setUsers(response.data);
-                } catch (error) {
-                    console.error('Error fetching users:', error);
-                }
-            }
-        };
+        if (selectedPipeline) {
+            const pipelineUsers = users.filter(user => user.pipeline === selectedPipeline.value);
+            setFilteredUsers(pipelineUsers);
+        } else {
+            setFilteredUsers(users);
+        }
+    }, [selectedPipeline, users]);
 
-        fetchUsers();
-    }, [selectedPipeline]);
+    useEffect(() => {
+        let filtered = phonebookData;
 
-    // Handle file input change
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
-
-    // Handle form submission
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!selectedPipeline || !selectedUser || !file) {
-            setMessage('Please select a pipeline, a user, and upload a CSV file.');
-            return;
+        if (selectedPipeline) {
+            filtered = filtered.filter(entry => entry.pipeline._id === selectedPipeline.value);
         }
 
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('userId', selectedUser);
-        formData.append('pipelineId', selectedPipeline);
+        if (selectedUser) {
+            filtered = filtered.filter(entry => entry.user && entry.user._id === selectedUser.value);
+        }
 
-        setLoading(true);
+        if (searchQuery) {
+            filtered = filtered.filter(entry => 
+                entry.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (entry.status && entry.status.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (entry.calstatus && entry.calstatus.toLowerCase().includes(searchQuery.toLowerCase()))
+            );
+        }
+
+        setFilteredData(filtered);
+    }, [selectedPipeline, selectedUser, searchQuery, phonebookData]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
+    const handleViewCommentsClick = (entry) => {
+        setCommentsToView(entry.comments || []);
+        setShowViewCommentModal(true);
+    };
+
+    const handleCSVUpload = async (formData) => {
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/phonebook/upload-csv`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+            const response = await axios.post(`/api/phonebook/upload-csv`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
-            setMessage(response.data.message);
+            alert(response.data.message);
+            handleClose();
         } catch (error) {
             console.error('Error uploading CSV:', error);
-            setMessage('Error uploading CSV file.');
-        } finally {
-            setLoading(false);
+            alert('Error uploading CSV file.');
         }
     };
-
-    // Toggle dropdown visibility
-    const toggleDropdown = () => {
-        setIsDropdownOpen(prev => !prev);
-    };
-
-    // Handle dropdown item click
-    const handleDropdownItemClick = async (userId) => {
-        setSelectedUser(userId);
-        setIsDropdownOpen(false);
-
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/phonebook/get-phonebook-by-user/${userId}?pipelineId=${selectedPipeline}`);
-            setPhonebookData(response.data);
-        } catch (error) {
-            console.error('Error fetching phonebook data:', error);
-            setMessage('Error fetching phonebook data.');
-        }
-    };
-
-    // Get button position
-    const getButtonPosition = () => {
-        if (buttonRef.current) {
-            const { top, left, width } = buttonRef.current.getBoundingClientRect();
-            return { top, left, width };
-        }
-        return { top: 0, left: 0, width: '100%' };
-    };
-
-    const { top, left } = getButtonPosition();
 
     return (
         <>
             <HomeNavbar />
-            <div style={{ marginTop: '2%' }}>
-                <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }} >
-                    <Button variant="outline-success" ref={buttonRef} onClick={handleShow}> <MdOutlineAddCircle style={{ marginTop: '-2px' }} /> Import CSV</Button>
-                    {/* <Button variant="outline-success" onClick={toggleDropdown}>
-                        Get Phone Number By User
-                    </Button> */}
+            <Container fluid>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px' }} className='mt-4'>
+                    <h2>Phonebook Management</h2>
+                    <Button variant="outline-success" onClick={handleShow}>
+                        <MdOutlineAddCircle style={{ marginTop: '-2px' }} /> Import CSV
+                    </Button>
                 </div>
 
-                {/* Dropdown */}
-                {isDropdownOpen && (
-                    <div style={dropdownStyles.overlay}>
-                        <div
-                            style={{
-                                ...dropdownStyles.dropdown,
-                                top: top + window.scrollY + 50,
-                                left: left + window.scrollX,
-                                width: '30%',
-                            }}
-                            ref={dropdownRef}>
-                            <div style={dropdownStyles.header}>
-                                <span style={dropdownStyles.title}>Select User</span>
-                                <Button variant="link" onClick={() => setIsDropdownOpen(false)} style={dropdownStyles.closeButton}><RxCross2 /></Button>
-                            </div>
-                            <ul style={dropdownStyles.list}>
-                                {users.length > 0 ? (
-                                    users.map((user) => (
-                                        <li
-                                            key={user._id}
-                                            style={dropdownStyles.item}
-                                            onClick={() => handleDropdownItemClick(user._id)}
-                                        >
-                                            {user.name || 'No data available'}
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li style={dropdownStyles.item}>No Data Available</li>
-                                )}
-                            </ul>
-                        </div>
+                <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', gap: '10px' }} className='mt-3'>
+                    {/* Filter by pipeline */}
+                    <div className="filter-container w-100">
+                        <label htmlFor="pipeline-filter">Filter by Pipeline:</label>
+                        <Select
+                            id="pipeline-filter"
+                            options={[{ value: '', label: 'All Pipelines' }, ...pipelines]}
+                            value={selectedPipeline}
+                            onChange={setSelectedPipeline}
+                            isClearable
+                        />
                     </div>
-                )}
 
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Import CSV</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <label htmlFor="pipelineSelect" className='mb-1'>Select Pipeline:</label>
-                                <select
-                                    id="pipelineSelect"
-                                    value={selectedPipeline}
-                                    onChange={(e) => setSelectedPipeline(e.target.value)}
-                                    className='selectOptionModal'
-                                >
-                                    <option value="">-- Select Pipeline --</option>
-                                    {pipelines.map((pipeline) => (
-                                        <option key={pipeline._id} value={pipeline._id}>
-                                            {pipeline.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                    {/* Filter by user */}
+                    <div className="filter-container w-100">
+                        <label htmlFor="user-filter">Filter by User:</label>
+                        <Select
+                            id="user-filter"
+                            options={[{ value: '', label: 'All Users' }, ...filteredUsers]}
+                            value={selectedUser}
+                            onChange={setSelectedUser}
+                            isClearable
+                            isDisabled={!selectedPipeline}
+                        />
+                    </div>
 
-                            <div>
-                                <label htmlFor="modalUser" className='mb-1'>Select User:</label>
-                                <select
-                                    id="modalUser"
-                                    value={selectedUser}
-                                    onChange={(e) => setSelectedUser(e.target.value)}
-                                    className='selectOptionModal'
-                                    disabled={!selectedPipeline}
-                                >
-                                    <option value="">-- Select User --</option>
-                                    {users.map((user) => (
-                                        <option key={user._id} value={user._id}>
-                                            {user.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                    {/* Search by Number */}
+                    <Form.Group controlId="search" className='w-100'>
+                        <Form.Label className='mb-0'>Search by Number:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Search by Number"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </Form.Group>
+                </div>
 
-                            <div>
-                                <label htmlFor="modalFile" className='mt-3'>Upload CSV:</label>
-                                <input
-                                    type="file"
-                                    id="modalFile"
-                                    accept=".csv"
-                                    onChange={handleFileChange}
-                                    className='inputFileUpload'
-                                />
-                            </div>
-                            <Button variant="secondary" type="submit" disabled={loading} className='w-100 mt-3'>
-                                {loading ? 'Uploading...' : 'Upload'}
-                            </Button>
-                            {message && <p>{message}</p>}
-                        </form>
-                    </Modal.Body>
-                </Modal>
+                <Table striped bordered hover className="mt-3">
+                    <thead>
+                        <tr>
+                            <th className="equal-width">Number</th>
+                            <th className="equal-width">Status</th>
+                            <th className="equal-width">Call Status</th>
+                            <th className="equal-width">Pipeline</th>
+                            <th className="equal-width">User</th>
+                            <th className="equal-width">View Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredData.length > 0 ? (
+                            filteredData.map((entry) => (
+                                <tr key={entry._id}>
+                                    <td style={{ textAlign: 'center' }}>{entry.number}</td>
+                                    <td style={{ textAlign: 'center' }}>{entry.status}</td>
+                                    <td style={{ textAlign: 'center' }}>{entry.calstatus}</td>
+                                    <td style={{ textAlign: 'center' }}>{entry.pipeline.name}</td>
+                                    <td style={{ textAlign: 'center' }}>{entry.user.name || 'N/A'}</td>
 
-                {/* Display phonebook data */}
-                {phonebookData.length > 0 && (
-                    <div style={{ marginTop: '20px' }}>
-                        <h3>Phonebook Data:</h3>
+                                    <td style={{ textAlign: 'center' }}>
+                                        <GrView style={{ fontSize: '20px', cursor: 'pointer' }} onClick={() => handleViewCommentsClick(entry)} />
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="6" style={{ textAlign: 'center' }}>No data available</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </Table>
+            </Container>
+
+            {/* Import CSV Modal */}
+            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Import CSV</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <ImportCSVForm pipelines={pipelines} users={users} onSubmit={handleCSVUpload} />
+                </Modal.Body>
+            </Modal>
+
+            {/* View Comments Modal */}
+            <Modal show={showViewCommentModal} onHide={() => setShowViewCommentModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>View Comments</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {commentsToView.length > 0 ? (
                         <ul>
-                            {phonebookData.map((entry, index) => (
-                                <div key={index}>
-                                    <li>{`Contact Number: ${entry.number} - Status: ${entry.status}`}</li>
-                                </div>
+                            {commentsToView.map((comment, index) => (
+                                <li key={index}>{comment}</li>
                             ))}
                         </ul>
-                    </div>
-                )}
-            </div>
+                    ) : (
+                        <p>No comments available.</p>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowViewCommentModal(false)}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
-};
-
-// Dropdown styles
-const dropdownStyles = {
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        zIndex: 1000,
-    },
-    dropdown: {
-        position: 'absolute',
-        backgroundColor: '#fff',
-        border: '1px solid #ddd',
-        borderRadius: '4px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        zIndex: 1001,
-        maxHeight: '400px',
-        overflowY: 'auto',
-        padding: '10px'
-    },
-    header: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '10px',
-    },
-    title: {
-        fontWeight: 'bold',
-    },
-    closeButton: {
-        color: 'black',
-        fontSize: '1.2em',
-    },
-    list: {
-        listStyle: 'none',
-        padding: 0,
-        margin: 0,
-    },
-    item: {
-        padding: '8px 12px',
-        cursor: 'pointer',
-        borderBottom: '1px solid #ddd',
-        textAlign: 'left',
-    },
 };
 
 export default RegisteredNumber;

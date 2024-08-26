@@ -32,7 +32,7 @@ const Home = () => {
 
         if (userData && userData.token) {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/phonebook/get-all-phonebook`, {
+                const response = await fetch(`/api/phonebook/get-all-phonebook-users`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${userData.token}`,
@@ -92,7 +92,7 @@ const Home = () => {
                 const userData = JSON.parse(localStorage.getItem('phoneUserData'));
                 if (userData && userData.token) {
                     await axios.post(
-                        `${process.env.REACT_APP_BASE_URL}/api/phonebook/add-comment`,
+                        `/api/phonebook/add-comment`,
                         {
                             phonebookId: selectedEntry._id,
                             comment: currentComment
@@ -128,7 +128,7 @@ const Home = () => {
                 const userData = JSON.parse(localStorage.getItem('phoneUserData'));
                 if (userData && userData.token) {
                     await axios.put(
-                        `${process.env.REACT_APP_BASE_URL}/api/phonebook/update-calstatus/${dropdownEntry._id}`,
+                        `/api/phonebook/update-calstatus/${dropdownEntry._id}`,
                         {
                             calstatus: status
                         },

@@ -8,6 +8,9 @@ import SuperadminDashboard from './pages/SuperadminDashboard';
 import Home from './pages/Home';
 import Blocklist from './pages/Blocklist';
 import Profile from './pages/Profile';
+import HodPhoneBook from './pages/HodPhoneBook';
+import CEOphoneBook from './pages/CEOphoneBook';
+import Allusers from './pages/Allusers';
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/blocklist' element={<Blocklist />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/hodphonebook' element={<HodPhoneBook />} />
+          <Route path='/ceophonebook' element={<CEOphoneBook />} />
+          <Route path='/allusers' element={<Allusers />} />
         </Routes>
       </Router>
     </>

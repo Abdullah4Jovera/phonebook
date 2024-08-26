@@ -17,7 +17,7 @@ const Blocklist = () => {
             navigate('/');
         } else {
             // Fetch blocked numbers from the API
-            axios.get(`${process.env.REACT_APP_BASE_URL}/api/phonebook/get-blocked-numbers`, {
+            axios.get(`/api/phonebook/get-blocked-numbers`, {
                 headers: {
                     'Authorization': `Bearer ${userData.token}`,
                     'Content-Type': 'application/json'

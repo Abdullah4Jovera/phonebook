@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap'
 import { CgProfile } from "react-icons/cg";
 import joveraLogo from '../../Assets/JoveraLogoweb.png'
 import '../../pages/style.css'
+import './Navbar.css'
 function HomeNavbar() {
     const navigate = useNavigate()
 
@@ -13,7 +14,7 @@ function HomeNavbar() {
         navigate('/')
     }
 
-    const joveraimagelogo = ()=>{
+    const joveraimagelogo = () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -21,19 +22,24 @@ function HomeNavbar() {
     }
 
     return (
-        <Navbar className="bg-body-tertiary sticky-top">
+        <Navbar className="sticky-top navbar_container ">
             <Container>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center' }} >
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
                     <img src={joveraLogo} alt="joveraLogo" className='joveraLogo_image' onClick={joveraimagelogo} />
-                    <h3>Phone Book Dashboard</h3>
+                    <h3 style={{ color: 'white' }} >Phone Book Dashboard</h3>
                 </div>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
 
                     <div className='all_navbar_btn' >
+
+                        <div style={{display:'flex', gap:'10px'}} >
+                            <Button variant="outline-success" style={{color:'white'}} onClick={() => navigate('/')} >Home</Button>
+                            <Button variant="outline-success" style={{color:'white'}} onClick={() => navigate('/profile')} >Profile</Button>
+                            <Button variant="outline-danger" onClick={() => navigate('/blocklist')} >BlockList Number</Button>
+                        </div>
+
                         <Button variant="outline-danger" onClick={logoutHandler} >Logout</Button>
-                        <Button variant="outline-danger" onClick={() => navigate('/blocklist')} >BlockList Number</Button>
-                        <CgProfile style={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => navigate('/profile')} />
                     </div>
 
                 </Navbar.Collapse>
