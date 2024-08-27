@@ -39,7 +39,7 @@ const connectDB = async () => {
     process.exit(1);
   }
 };
-
+/////comment
 const startServer = async () => {
   await connectDB();
 
