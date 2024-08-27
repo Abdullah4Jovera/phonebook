@@ -259,10 +259,19 @@ const Home = () => {
                     <Modal.Title>View Comments</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {commentsToView.length > 0 ? (
+                    {commentsToView && commentsToView.length > 0 ? (
                         <ul>
                             {commentsToView.map((comment, index) => (
-                                <li key={index}>{comment.remarks}</li>
+                                <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }} >
+
+                                    <div>
+                                        <p className='mb-0'>{comment.remarks}</p>
+                                        {comment?.user?.name && <p>Posted by: {comment.user.name}</p>}
+                                    </div>
+                                    {comment?.createdAt && (
+                                        <p>{new Date(comment.createdAt).toLocaleString()}</p>
+                                    )}
+                                </li>
                             ))}
                         </ul>
                     ) : (

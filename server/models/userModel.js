@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    pipeline: {
+    pipeline: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Pipeline',
       required: false, // Allow null or undefined
-    },
+    }],
     // subpipeline: {
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: 'SubPipeline',

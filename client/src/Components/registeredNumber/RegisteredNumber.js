@@ -48,7 +48,7 @@ const RegisteredNumber = () => {
                 setUsers(usersResponse.data.map(user => ({
                     value: user._id,
                     label: user.name,
-                    pipeline: user.pipeline?._id,
+                    pipelines: user.pipeline || [], // Ensure pipelines is an array
                 })));
 
                 const sortedData = phoneBookResponse.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -66,7 +66,9 @@ const RegisteredNumber = () => {
 
     useEffect(() => {
         if (selectedPipeline) {
-            const pipelineUsers = users.filter(user => user.pipeline === selectedPipeline.value);
+            const pipelineUsers = users.filter(user =>
+                Array.isArray(user.pipelines) && user.pipelines.some(pipeline => pipeline._id === selectedPipeline.value)
+            );
             setFilteredUsers(pipelineUsers);
         } else {
             setFilteredUsers(users);
@@ -77,7 +79,9 @@ const RegisteredNumber = () => {
         let filtered = phonebookData;
 
         if (selectedPipeline) {
-            filtered = filtered.filter(entry => entry.pipeline._id === selectedPipeline.value);
+            filtered = filtered.filter(entry =>
+                entry.pipeline && entry.pipeline._id === selectedPipeline.value
+            );
         }
 
         if (selectedUser) {
@@ -85,7 +89,7 @@ const RegisteredNumber = () => {
         }
 
         if (searchQuery) {
-            filtered = filtered.filter(entry => 
+            filtered = filtered.filter(entry =>
                 entry.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 (entry.status && entry.status.toLowerCase().includes(searchQuery.toLowerCase())) ||
                 (entry.calstatus && entry.calstatus.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -183,9 +187,8 @@ const RegisteredNumber = () => {
                                     <td style={{ textAlign: 'center' }}>{entry.number}</td>
                                     <td style={{ textAlign: 'center' }}>{entry.status}</td>
                                     <td style={{ textAlign: 'center' }}>{entry.calstatus}</td>
-                                    <td style={{ textAlign: 'center' }}>{entry.pipeline.name}</td>
-                                    <td style={{ textAlign: 'center' }}>{entry.user.name || 'N/A'}</td>
-
+                                    <td style={{ textAlign: 'center' }}>{entry.pipeline?.name || 'N/A'}</td>
+                                    <td style={{ textAlign: 'center' }}>{entry.user?.name || 'N/A'}</td>
                                     <td style={{ textAlign: 'center' }}>
                                         <GrView style={{ fontSize: '20px', cursor: 'pointer' }} onClick={() => handleViewCommentsClick(entry)} />
                                     </td>
@@ -198,6 +201,7 @@ const RegisteredNumber = () => {
                         )}
                     </tbody>
                 </Table>
+
             </Container>
 
             {/* Import CSV Modal */}
@@ -211,20 +215,29 @@ const RegisteredNumber = () => {
             </Modal>
 
             {/* View Comments Modal */}
-            <Modal show={showViewCommentModal} onHide={() => setShowViewCommentModal(false)}>
+            <Modal show={showViewCommentModal} onHide={() => setShowViewCommentModal(false)} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>View Comments</Modal.Title>
+                    <Modal.Title>Comments</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {commentsToView.length > 0 ? (
-                        <ul>
-                            {commentsToView.map((comment, index) => (
-                                <li key={index}>{comment}</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No comments available.</p>
-                    )}
+                    <ul>
+                        {commentsToView.length > 0 ? (
+                            commentsToView.map((comment, index) => (
+                                <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }} >
+
+                                <div>
+                                    <p className='mb-0'>{comment.remarks}</p>
+                                    {comment?.user?.name && <p>Posted by: {comment.user.name}</p>}
+                                </div>
+                                {comment?.createdAt && (
+                                    <p>{new Date(comment.createdAt).toLocaleString()}</p>
+                                )}
+                            </li>
+                            ))
+                        ) : (
+                            <p>No comments available</p>
+                        )}
+                    </ul>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowViewCommentModal(false)}>

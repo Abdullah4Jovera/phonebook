@@ -39,18 +39,18 @@ const CEOphoneBook = () => {
           }),
         ]);
 
-        setPipelines(pipelinesResponse.data.map(pipeline => ({
+        setPipelines((pipelinesResponse.data || []).map(pipeline => ({
           value: pipeline._id,
           label: pipeline.name,
         })));
 
-        setUsers(usersResponse.data.map(user => ({
+        setUsers((usersResponse.data || []).map(user => ({
           value: user._id,
           label: user.name,
-          pipeline: user.pipeline?._id,
+          pipelines: (user.pipeline || []).map(p => p._id),
         })));
 
-        const sortedData = phoneBookResponse.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        const sortedData = (phoneBookResponse.data || []).sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         setCeoPhoneBookData(sortedData);
         setFilteredData(sortedData);
       } catch (error) {
@@ -65,7 +65,7 @@ const CEOphoneBook = () => {
 
   useEffect(() => {
     if (selectedPipeline) {
-      const pipelineUsers = users.filter(user => user.pipeline === selectedPipeline.value);
+      const pipelineUsers = (users || []).filter(user => user.pipelines.includes(selectedPipeline.value));
       setFilteredUsers(pipelineUsers);
     } else {
       setFilteredUsers(users);
@@ -98,7 +98,7 @@ const CEOphoneBook = () => {
   };
 
   const handleViewComments = (comments) => {
-    setCommentsToView(comments);
+    setCommentsToView(comments || []); // Ensure comments is not null
     setShowViewCommentModal(true);
   };
 
@@ -163,7 +163,7 @@ const CEOphoneBook = () => {
                   <td style={{ textAlign: 'center' }}>{entry.number}</td>
                   <td style={{ textAlign: 'center' }}>{entry.status}</td>
                   <td style={{ textAlign: 'center' }}>{entry.calstatus}</td>
-                  <td style={{ textAlign: 'center' }}>{entry.pipeline.name}</td>
+                  <td style={{ textAlign: 'center' }}>{entry.pipeline?.name || 'N/A'}</td>
                   <td style={{ textAlign: 'center' }}>{entry.user?.name || 'N/A'}</td>
                   <td style={{ textAlign: 'center' }}>
                     <GrView
@@ -189,7 +189,16 @@ const CEOphoneBook = () => {
             {commentsToView.length > 0 ? (
               <ul>
                 {commentsToView.map((comment, index) => (
-                  <li key={index}>{comment.remarks}</li>
+                  <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }} >
+
+                  <div>
+                      <p className='mb-0'>{comment.remarks}</p>
+                      {comment?.user?.name && <p>Posted by: {comment.user.name}</p>}
+                  </div>
+                  {comment?.createdAt && (
+                      <p>{new Date(comment.createdAt).toLocaleString()}</p>
+                  )}
+              </li>
                 ))}
               </ul>
             ) : (

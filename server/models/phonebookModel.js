@@ -12,10 +12,10 @@ const phonebookSchema = new mongoose.Schema(
             ref: 'Pipeline',
             required: true
         },
-        selected_users: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-        }], 
+        // selected_users: [{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'User',
+        // }], 
         number: {
             type: String,
             required: true

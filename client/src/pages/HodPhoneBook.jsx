@@ -150,6 +150,8 @@ const HodPhoneBook = () => {
                                         <th className="equal-width">Number</th>
                                         <th className="equal-width">Status</th>
                                         <th className="equal-width">Call Status</th>
+                                        <th className="equal-width">Pipeline</th>
+                                        <th className="equal-width">User</th>
                                         <th className="equal-width">View Comments</th>
                                     </tr>
                                 </thead>
@@ -159,6 +161,8 @@ const HodPhoneBook = () => {
                                             <td style={{ textAlign: 'center' }}>{entry.number}</td>
                                             <td style={{ textAlign: 'center' }}>{entry.status}</td>
                                             <td style={{ textAlign: 'center' }}>{entry.calstatus}</td>
+                                            <td style={{ textAlign: 'center' }}>{entry.pipeline.name}</td>
+                                            <td style={{ textAlign: 'center' }}>{entry.user.name}</td>
                                             <td style={{ textAlign: 'center' }}>
                                                 <GrView
                                                     style={{ fontSize: '20px', cursor: 'pointer' }}
@@ -185,7 +189,16 @@ const HodPhoneBook = () => {
                         {commentsToView.length > 0 ? (
                             <ul>
                                 {commentsToView.map((comment, index) => (
-                                    <li key={index}>{comment.remarks}</li>
+                                    <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }} >
+
+                                    <div>
+                                        <p className='mb-0'>{comment.remarks}</p>
+                                        {comment?.user?.name && <p>Posted by: {comment.user.name}</p>}
+                                    </div>
+                                    {comment?.createdAt && (
+                                        <p>{new Date(comment.createdAt).toLocaleString()}</p>
+                                    )}
+                                </li>
                                 ))}
                             </ul>
                         ) : (

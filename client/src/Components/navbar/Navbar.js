@@ -1,50 +1,57 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap';
+import joveraLogo from '../../Assets/JoveraLogoweb.png';
+import { Link } from 'react-router-dom';
+import '../../pages/style.css';
+import './Navbar.css';
+import { IoMdLogOut } from "react-icons/io";
+import { MdOutlineBlock } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
-import joveraLogo from '../../Assets/JoveraLogoweb.png'
-import '../../pages/style.css'
-import './Navbar.css'
+import { IoHomeOutline } from "react-icons/io5";
+
 function HomeNavbar() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const logoutHandler = () => {
-        localStorage.removeItem('phoneUserData')
-        navigate('/')
-    }
+        localStorage.removeItem('phoneUserData');
+        navigate('/');
+    };
 
     const joveraimagelogo = () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
-    }
+    };
 
     return (
-        <Navbar className="sticky-top navbar_container ">
-            <Container>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-                    <img src={joveraLogo} alt="joveraLogo" className='joveraLogo_image' onClick={joveraimagelogo} />
-                    <h3 style={{ color: 'white' }} >Phone Book Dashboard</h3>
-                </div>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
+        <>
+            <Navbar className="sticky-top navbar_container">
+                <Container fluid>
 
-                    <div className='all_navbar_btn' >
-
-                        <div style={{display:'flex', gap:'10px'}} >
-                            <Button variant="outline-success" style={{color:'white'}} onClick={() => navigate('/')} >Home</Button>
-                            <Button variant="outline-success" style={{color:'white'}} onClick={() => navigate('/profile')} >Profile</Button>
-                            <Button variant="outline-danger" onClick={() => navigate('/blocklist')} >BlockList Number</Button>
-                        </div>
-
-                        <Button variant="outline-danger" onClick={logoutHandler} >Logout</Button>
+                    <div style={{ display: 'flex', alignItems: 'center' }} onClick={joveraimagelogo}>
+                        <img src={joveraLogo} alt="joveraLogo" className='joveraLogo_image' />
+                        <h3 style={{ color: 'white', cursor: 'pointer' }}>PhoneBook Management</h3>
                     </div>
 
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+                    <Nav className="m-auto" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                            <Link className='navbar_btn' to='/'> <IoHomeOutline style={{ marginTop: '-3px' }} /> Home</Link>
+                            <Link className='navbar_btn' to='/profile'> <CgProfile style={{ marginTop: '-3px' }} /> Profile</Link>
+                            <Link className='navbar_btn' to='/blocklist'> <MdOutlineBlock style={{ marginTop: '-2px' }} /> BlockList Number</Link>
+                        </div>
+                    </Nav>
+
+                    <div className="ml-auto">
+                        <Button variant="outline-danger" onClick={logoutHandler}> <IoMdLogOut style={{ marginTop: '-2px' }} /> Logout</Button>
+                    </div>
+
+                </Container>
+            </Navbar>
+        </>
     );
 }
 

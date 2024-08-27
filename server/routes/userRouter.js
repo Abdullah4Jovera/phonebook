@@ -5,22 +5,20 @@ const router = express.Router();
 const User = require('../models/userModel'); // Adjust the path to your User model
 const { generateToken, isAuth } = require('../utils');
 const Pipeline = require('../models/pipelineModel'); // Adjust the path as needed
+const mongoose = require('mongoose');
 
-
-// GET route to fetch all users based on pipeline and subpipeline
+// GET route to fetch all users based on pipeline 
 router.get('/get-users-by-pipeline', isAuth, async (req, res) => {
   try {
     // Check if the pipeline exists in req.user
-    if (!req.user || !req.user.pipeline) {
-      return res.status(400).json({ message: 'Pipeline is required.' });
+    if (!req.user || !req.user.pipeline || !Array.isArray(req.user.pipeline)) {
+      return res.status(400).json({ message: 'Pipeline is required and should be an array.' });
     }
 
-    const  pipeline  = req.user.pipeline;
+    const pipelines = req.user.pipeline;
 
-    // Build the query object
-   
-
-    const users = await User.find({pipeline})
+    // Build the query object using $in to match any of the pipelines
+    const users = await User.find({ pipeline: { $in: pipelines } })
       .select('-password') // Exclude the password field
       .populate('pipeline') // Populate the pipeline field
       .exec();
@@ -157,7 +155,7 @@ router.post('/login', async (req, res) => {
 router.put('/update-user/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, pipeline, subpipeline, email, password, image, role, branch, permissions, delStatus, verified } = req.body;
+    const { name, pipeline, email, password, image, role, branch, permissions, delstatus, verified } = req.body;
 
     // Find the user by ID
     const user = await User.findById(id);
@@ -167,8 +165,22 @@ router.put('/update-user/:id', async (req, res) => {
 
     // Update user fields
     if (name) user.name = name;
-    if (pipeline !== undefined) user.pipeline = pipeline === 'null' ? null : pipeline;
-    if (subpipeline !== undefined) user.subpipeline = subpipeline === 'null' ? null : subpipeline;
+
+    if (pipeline) {
+      // Ensure pipelines are valid ObjectIds
+      const validPipelines = await Promise.all(
+        pipeline.map(async (pipe) => {
+          if (mongoose.Types.ObjectId.isValid(pipe)) {
+            return pipe;
+          } else {
+            const foundPipeline = await Pipeline.findOne({ name: pipe });
+            return foundPipeline ? foundPipeline._id : null;
+          }
+        })
+      );
+      user.pipeline = validPipelines.filter((pipe) => pipe !== null);
+    }
+
     if (email) user.email = email;
     if (password) {
       // Hash the new password if provided
@@ -177,9 +189,13 @@ router.put('/update-user/:id', async (req, res) => {
     }
     if (image) user.image = image;
     if (role) user.role = role;
-    if (branch !== undefined) user.branch = branch === 'null' ? null : branch;
+
+    if (branch !== undefined) {
+      user.branch = branch === 'null' ? null : branch;
+    }
+
     if (permissions) user.permissions = permissions;
-    if (delStatus !== undefined) user.delStatus = delStatus;
+    if (delstatus !== undefined) user.delstatus = delstatus;
     if (verified !== undefined) user.verified = verified;
 
     // Save the updated user to the database

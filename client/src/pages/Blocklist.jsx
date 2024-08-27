@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './style.css';
 import HomeNavbar from '../Components/navbar/Navbar';
-import { Table, Form } from 'react-bootstrap'; // Make sure you have react-bootstrap installed
+import { Table, Form, Container } from 'react-bootstrap'; // Make sure you have react-bootstrap installed
 import axios from 'axios'; // Ensure you have axios installed
 import { useNavigate } from 'react-router-dom';
+import './style.css';
 
 const Blocklist = () => {
     const [blockedNumbers, setBlockedNumbers] = useState([]);
@@ -47,42 +47,45 @@ const Blocklist = () => {
     return (
         <div>
             <HomeNavbar />
-            <div className="phonebook-container tableViewContainer">
+            <Container>
 
-                <div className='search_bar_container'>
-                    <Form.Group controlId="searchBar" className='searchBar_container'>
-                        <Form.Control
-                            type="text"
-                            placeholder="Search by Number"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                    </Form.Group>
-                </div>
+                <div className="phonebook-container">
 
-                {filteredNumbers.length > 0 ? (
-                    <div  >
-                        <Table striped bordered hover responsive>
-                            <thead className='table_head' >
-                                <tr className='table_head'>
-                                    <th className="equal-width">Number</th>
-                                    <th className="equal-width">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredNumbers.map((entry, index) => (
-                                    <tr key={index}>
-                                        <td style={{ textAlign: 'center' }}>{entry.number}</td>
-                                        <td style={{ textAlign: 'center' }}>{entry.status}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                    <div style={{ width: '100%', maxWidth: '1500px', display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
+                        <Form.Group controlId="searchBar" className='w-50'>
+                            <Form.Control
+                                type="text"
+                                placeholder="Search by Number"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </Form.Group>
                     </div>
-                ) : (
-                    <p>No blocked numbers available.</p>
-                )}
-            </div>
+
+                    {filteredNumbers.length > 0 ? (
+                        <div  >
+                            <Table striped bordered hover responsive className='mt-4' >
+                                <thead className='table_head' >
+                                    <tr className='table_head'>
+                                        <th className="equal-width">Number</th>
+                                        <th className="equal-width">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredNumbers.map((entry, index) => (
+                                        <tr key={index}>
+                                            <td style={{ textAlign: 'center' }}>{entry.number}</td>
+                                            <td style={{ textAlign: 'center' }}>{entry.status}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
+                    ) : (
+                        <p>No Blocked Numbers Available.</p>
+                    )}
+                </div>
+            </Container>
         </div>
     );
 };

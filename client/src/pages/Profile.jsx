@@ -13,6 +13,9 @@ const Profile = () => {
 
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
+    const localstorageData = localStorage.getItem('phoneUserData')
+    const convertData = JSON.parse(localstorageData)
+    console.log(convertData.email, 'localstorageData')
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,10 +63,27 @@ const Profile = () => {
 
             <div className='resetPassword_container'>
                 <div className='resetPassword'>
-                    <Card>
-                    <div className='joveralogo_image_container'>
-                        <img src={JoveraLogoweb} alt="JoveraLogoweb" className='joveralogo_image' />
-                    </div>
+                    <Card  >
+                        <div className='joveralogo_image_container'>
+                            <img src={JoveraLogoweb} alt="JoveraLogoweb" className='joveralogo_image' />
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection:'column' }} className='mt-2' >
+                            {convertData.name && (
+                                <p>
+                                    <strong>Name:</strong> {convertData.name}
+                                </p>
+                            )}
+                            {convertData.email && (
+                                <p>
+                                    <strong>Email:</strong> {convertData.email}
+                                </p>
+                            )}
+                            {/* {convertData.role && (
+                                <p>
+                                    <strong>Role:</strong> {convertData.role}
+                                </p>
+                            )} */}
+                        </div>
                         <h3 className="text-center">Reset Password</h3>
                         <Card.Body className="d-flex flex-column">
                             <div className="flex-grow-1">
@@ -90,8 +110,7 @@ const Profile = () => {
                                             onChange={handleConfirmPasswordChange}
                                         />
                                     </Form.Group>
-
-                                    <Button type="submit" className='w-100 mt-4 gradient_button'>
+                                    <Button type="submit" className='w-100 mt-4 gradient_button' >
                                         Reset Password
                                     </Button>
                                 </Form>

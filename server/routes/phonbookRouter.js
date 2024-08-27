@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const csv = require('csv-parser');
-const fs = require('fs'); 
+const fs = require('fs');
 const path = require('path');
 const Phonebook = require('../models/phonebookModel');
 const User = require('../models/userModel');
@@ -83,34 +83,37 @@ router.post('/upload-csv', upload.single('file'), async (req, res) => {
         const filePath = path.join(__dirname, '../uploads', req.file.filename);
         const phonebookEntries = [];
 
-        // Determine roles based on pipeline
-        let rolesToFetch = [];
-        switch (pipelineId) {
-            case '66c97f0b5f99be5381146d9a':
-                rolesToFetch = ['Personal_Loan_HOD'];
-                break;
-            case '66c97f0b5f99be5381146da1':
-                rolesToFetch = ['Business_Banking_HOD'];
-                break;
-            case '66c97f0b5f99be5381146da4':
-                rolesToFetch = ['Mortgage_HOD'];
-                break;
-            case '66c97f0b5f99be5381146da7':
-                rolesToFetch = ['CEO_Mortgage_HOD'];
-                break;
-            default:
-                return res.status(400).json({ message: 'Invalid pipeline ID' });
-        }
+        // // Determine roles based on pipeline
+        // let rolesToFetch = [];
+        // switch (pipelineId) {
+        //     case '66c97f0b5f99be5381146d9a':
+        //         rolesToFetch = ['Personal_Loan_HOD'];
+        //         break;
+        //     case '66c97f0b5f99be5381146d9e':
+        //         rolesToFetch = ['Personal_Loan_HOD'];
+        //         break;
+        //     case '66c97f0b5f99be5381146da1':
+        //         rolesToFetch = ['Business_Banking_HOD'];
+        //         break;
+        //     case '66c97f0b5f99be5381146da4':
+        //         rolesToFetch = ['Mortgage_HOD'];
+        //         break;
+        //     case '66c97f0b5f99be5381146da7':
+        //         rolesToFetch = ['CEO_Mortgage_HOD'];
+        //         break;
+        //     default:
+        //         return res.status(400).json({ message: 'Invalid pipeline ID' });
+        // }
 
-        // Fetch users based on roles
-        const selectedUsers = await User.find({ role: { $in: rolesToFetch } }).select('_id').exec();
-        let selectedUserIds = selectedUsers.map(user => user._id.toString());
+        // // Fetch users based on roles
+        // const selectedUsers = await User.find({ role: { $in: rolesToFetch } }).select('_id').exec();
+        // let selectedUserIds = selectedUsers.map(user => user._id.toString());
 
         // Add the userId from req.body to the selected users
-        selectedUserIds.push(userId);
+        // selectedUserIds.push(userId);
 
         // Ensure the selectedUserIds array contains only unique user IDs
-        selectedUserIds = [...new Set(selectedUserIds)];
+        // selectedUserIds = [...new Set(selectedUserIds)];
 
         // Collect phone numbers and statuses from the CSV
         const phonebookData = [];
@@ -135,7 +138,7 @@ router.post('/upload-csv', upload.single('file'), async (req, res) => {
                         .map(entry => ({
                             user: userId,
                             pipeline: pipelineId,
-                            selected_users: selectedUserIds,
+                            // selected_users: selectedUserIds,
                             number: entry.number,
                             status: entry.status, // Use the status from the CSV row
                         }));
@@ -166,7 +169,7 @@ router.post('/upload-csv', upload.single('file'), async (req, res) => {
     }
 });
 
-router.get('/get-all-phonebook', isAuth,  hasRole(['CEO','superadmin']), async (req, res) => {
+router.get('/get-all-phonebook', isAuth, hasRole(['CEO', 'superadmin']), async (req, res) => {
     try {
         const phonebookEntries = await Phonebook.find({
             calstatus: { $ne: 'Convert to Lead' } // Exclude entries where calstatus is 'Convert to Lead'
@@ -187,15 +190,16 @@ router.get('/get-all-phonebook', isAuth,  hasRole(['CEO','superadmin']), async (
         res.status(500).json({ message: 'Error fetching phonebook entries' });
     }
 });
-router.get('/get-all-phonebook-users', isAuth,   async (req, res) => {
+router.get('/get-all-phonebook-users', isAuth, async (req, res) => {
     try {
         const userId = req.user._id;
-        console.log(userId);
-        const phonebookEntries = await Phonebook.find({ userId ,
+
+        const phonebookEntries = await Phonebook.find({
+            user: userId, 
             calstatus: { $ne: 'Convert to Lead' } // Exclude entries where calstatus is 'Convert to Lead'
         })
-            .populate('user', 'name')
-            .populate('pipeline', 'name')
+            .populate('user', 'name') // Populate the user field with only the name
+            .populate('pipeline', 'name') // Populate the pipeline field with only the name
             .populate({
                 path: 'comments',
                 populate: {
@@ -289,6 +293,7 @@ router.get('/get-phonebook-by-pipeline',
                 calstatus: { $ne: 'Convert to Lead' }
             })
                 .populate('user', 'name')
+                .populate('pipeline', 'name')
                 .populate({
                     path: 'comments',
                     populate: {

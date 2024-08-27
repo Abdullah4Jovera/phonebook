@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Select from 'react-select';
 
 const ImportCSVForm = ({ pipelines, users, onSubmit }) => {
     const [selectedPipeline, setSelectedPipeline] = useState(null);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
+    // Handle file selection
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
 
+    // Filter users when the pipeline is selected
+    useEffect(() => {
+        if (selectedPipeline) {
+            const pipelineUsers = users.filter(user => 
+                user.pipelines.some(pipeline => pipeline._id === selectedPipeline.value)
+            );
+            setFilteredUsers(pipelineUsers);
+        } else {
+            setFilteredUsers(users);
+        }
+    }, [selectedPipeline, users]);
+
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!selectedPipeline || !selectedUser || !file) {
@@ -54,7 +69,10 @@ const ImportCSVForm = ({ pipelines, users, onSubmit }) => {
                 <label htmlFor="modalUser" className="mb-1">Select User:</label>
                 <Select
                     id="modalUser"
-                    options={users.filter(user => user.pipeline === selectedPipeline?.value)}
+                    options={filteredUsers.map(user => ({
+                        value: user.value,
+                        label: user.label,
+                    }))}
                     value={selectedUser}
                     onChange={setSelectedUser}
                     className="selectOptionModal"
